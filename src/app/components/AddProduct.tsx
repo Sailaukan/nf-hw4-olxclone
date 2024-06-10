@@ -69,6 +69,17 @@ const AddProduct = ({ setModalOpen, newProducts, setNewProducts }: any) => {
     // image: string,
     // category: string
 
+    const handleDeletePhoto = (index: number) => {
+        setFiles((prevFiles) => {
+            if (prevFiles) {
+                const newFiles = [...prevFiles];
+                newFiles.splice(index, 1);
+                return newFiles;
+            }
+            return prevFiles;
+        });
+    };
+
     const handleSaveProducts = () => {
         setNewProducts(
             files?.map((file) => ({
@@ -133,8 +144,8 @@ const AddProduct = ({ setModalOpen, newProducts, setNewProducts }: any) => {
                             Product Photos
                         </label>
                         <div className="grid grid-cols-3 md:grid-cols-4 gap-4 mt-2">
-                            {files && files.map((file) => (
-                                <ImageShow src={file} />
+                            {files && files.map((file, index) => (
+                                <ImageShow src={file} delete={() => handleDeletePhoto(index)} key={index} />
                             ))}
                             <div className="relative group aspect-square bg-gray-100 rounded-lg overflow-hidden">
                                 <input
@@ -164,7 +175,7 @@ const AddProduct = ({ setModalOpen, newProducts, setNewProducts }: any) => {
                                 </label>
                             </div>
                         </div>
-                        {uploadProgress > 0 && uploadProgress < 100 && (
+                        {uploadProgress > 0 && (
                             <div className="absolute inset-0 bg-gray-900 bg-opacity-75 flex flex-col items-center justify-center p-4 rounded-lg shadow-lg">
                                 <progress value={uploadProgress} max="100" className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
                                     <div className="bg-blue-500 h-full" style={{ width: `${uploadProgress}%` }}></div>
