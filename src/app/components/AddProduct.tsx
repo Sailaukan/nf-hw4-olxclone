@@ -55,6 +55,8 @@ const AddProduct = ({ setModalOpen, newProducts, setNewProducts }: any) => {
             .then((response) => {
                 setStatus("Upload successful!");
                 setUploadProgress(100);
+                setUploadProgress(0);
+                setLoadedBytes(0);
                 setFiles((prevFiles) => (prevFiles ? [...prevFiles, response.data.location] : [response.data.location]));
             })
             .catch((error) => {
